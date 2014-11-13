@@ -1,24 +1,43 @@
+clear
+
+//Metodo Runge - Kutta de 4 ordem
+function result = RK4(x,y,hR,F_xy)
+    for i=1:(length(x)-1)                              // calculation loop
+        k_1 = F_xy(x(i),y(i));
+        k_2 = F_xy(x(i)+0.5*hR,y(i)+0.5*hR*k_1);
+        k_3 = F_xy((x(i)+0.5*hR),(y(i)+0.5*hR*k_2));
+        k_4 = F_xy((x(i)+hR),(y(i)+k_3*hR));
+    
+        y(i+1) = y(i) + (1/6)*(k_1+2*k_2+2*k_3+k_4)*hR;  // main equation
+    end
+    result=y;
+endfunction
+
 //Initialize the method
+iniInterval=1;
+endInterval=100;
+h=0.01             //(endInterval-iniInterval)/numSubInterval    //Step size
+numSubInterval=(endInterval-iniInterval)/h                                      //Number of steps of ABM4
 
-//iniInterval=1;
-//endInterval=10;
+
+//iniInterval=0;
+//endInterval=1;
 //numSubInterval=10                                       //Number of steps of ABM4
-//h=0.01;//((endInterval-iniInterval)/numSubInterval);    //Step size
+//h=0.1;//((endInterval-iniInterval)/numSubInterval);    //Step size
 
-iniInterval=0;
-endInterval=1;
-numSubInterval=10                                       //Number of steps of ABM4
-h=0.1;//((endInterval-iniInterval)/numSubInterval);    //Step size
 
 //Method Runge Kutta 4th Order
 xRK = iniInterval:h:iniInterval+3*h;                  // Calculates x for Range Kutta
 yRK = zeros(1,length(xRK));                            // Make a array of zeros who size is lenght(x) 
-yRK(1)=1
+yRK(1)=-2
 //yRK(1) = 5;                                          //Initial condition
 
+//t=x  e r=y
 function result = F_xy(t,r)
-    //result = (r*r-r)/t;                    //Change the function as you desire
-    result=t-2*r+1;
+    result = ((r^2)+r)/t;                    //Change the function as you desire
+    //result=t-2*r+1;    
+    //result=t+r
+    //result=r^2
 endfunction
 
 yRK=RK4(xRK,yRK,h,F_xy)                              //Range Kutta 4th order  
