@@ -14,9 +14,9 @@ function result = RK4(x,y,hR,F_xy)
 endfunction
 
 //Initialize the method
-iniInterval=1;
-endInterval=100;
-h=0.01             //(endInterval-iniInterval)/numSubInterval    //Step size
+iniInterval=0;
+endInterval=2;
+h=0.2             //(endInterval-iniInterval)/numSubInterval    //Step size
 numSubInterval=(endInterval-iniInterval)/h                                      //Number of steps of ABM4
 
 
@@ -29,12 +29,12 @@ numSubInterval=(endInterval-iniInterval)/h                                      
 //Method Runge Kutta 4th Order
 xRK = iniInterval:h:iniInterval+3*h;                  // Calculates x for Range Kutta
 yRK = zeros(1,length(xRK));                            // Make a array of zeros who size is lenght(x) 
-yRK(1)=-2
+yRK(1)=0.5
 //yRK(1) = 5;                                          //Initial condition
 
 //t=x  e r=y
 function result = F_xy(t,r)
-    result = ((r^2)+r)/t;                    //Change the function as you desire
+    result = r-(t^2)+1;                    //Change the function as you desire
     //result=t-2*r+1;    
     //result=t+r
     //result=r^2
@@ -59,14 +59,17 @@ for i=4:numSubInterval
     end
     //Predition
     Ypre =yABM(i)+((1/24)*h*((55*f(4))-(59*f(3))+(37*f(2))-(9*f(1))));
+    
     yABM(i+1)=Ypre;
     xABM(i+1)=iniInterval+i*h;
+    
+    //disp(yABM(i+1),xABM(i+1));
     
     //Correction   
     x=xABM(i+1);
     y=yABM(i+1);
-    f(4)=F_xy(x,y);
+    f(5)=F_xy(x,y);
     Ycor=yABM(i)+((1/24)*h*(9*f(5)+19*f(4)-5*f(3)+f(2)));
     
-    disp(yABM(i+1),xABM(i+1));    
+    disp(Ycor,xABM(i+1));    
 end

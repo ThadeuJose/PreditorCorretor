@@ -13,21 +13,21 @@ deff('fun3 = f3(u1,u2,u3,u4)', 'fun3=u4')
 deff('fun4 = f4(u1,u2,u3,u4)', 'fun4=(2*sin(u1-u3)*(((u2^2)*l1*(m1+m2))+(g*(m1+m2)*cos(u1))+((u4^2)*l2*m2*cos(u1-u3))))/(l2*((2*m1)+m2-(m2*cos((2*u1)-(2*u3)))))')
 
 //Initial Condition
-g=9.8
-l1=10
-l2=10
-m1=1
-m2=1
+g=9.81
+l1=1
+l2=1
+m1=0.5
+m2=0.5
 //Radians
 teta1=%pi/2
-teta2=%pi/2
+teta2=0
 dteta1=0
 dteta2=0
 
 M=4 //Number of Equations
 
 a=0
-b=1
+b=100
 N=10000
 h=(b-a)/N
 
