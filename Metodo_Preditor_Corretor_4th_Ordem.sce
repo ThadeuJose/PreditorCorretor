@@ -14,30 +14,28 @@ function result = RK4(x,y,hR,F_xy)
 endfunction
 
 //Initialize the method
-iniInterval=0;
-endInterval=2;
-h=0.2             //(endInterval-iniInterval)/numSubInterval    //Step size
-numSubInterval=(endInterval-iniInterval)/h                                      //Number of steps of ABM4
-
-
 //iniInterval=0;
-//endInterval=1;
-//numSubInterval=10                                       //Number of steps of ABM4
-//h=0.1;//((endInterval-iniInterval)/numSubInterval);    //Step size
+//endInterval=2;
+//h=0.2             //(endInterval-iniInterval)/numSubInterval    //Step size
+//numSubInterval=(endInterval-iniInterval)/h                                      //Number of steps of ABM4
+
+
+iniInterval=0;
+endInterval=1;
+numSubInterval=10                                       //Number of steps of ABM4
+h=((endInterval-iniInterval)/numSubInterval);    //Step size
 
 
 //Method Runge Kutta 4th Order
 xRK = iniInterval:h:iniInterval+3*h;                  // Calculates x for Range Kutta
 yRK = zeros(1,length(xRK));                            // Make a array of zeros who size is lenght(x) 
-yRK(1)=0.5
-//yRK(1) = 5;                                          //Initial condition
+//yRK(1)=0.5
+yRK(1) = 1;                                          //Initial condition
 
 //t=x  e r=y
 function result = F_xy(t,r)
-    result = r-(t^2)+1;                    //Change the function as you desire
-    //result=t-2*r+1;    
-    //result=t+r
-    //result=r^2
+    //result = r-(t^2)+1;                    //Change the function as you desire
+    result=t-2*r+1;
 endfunction
 
 yRK=RK4(xRK,yRK,h,F_xy)                              //Range Kutta 4th order  
@@ -49,7 +47,7 @@ yABM=zeros(1,numSubInterval+1);
 for i=1:4
     xABM(i)=xRK(i);
     yABM(i)=yRK(i);
-    disp(yABM(i),xABM(i));
+    disp("x= "+string(xABM(i))+" y= "+string(yABM(i)));
 end   
 for i=4:numSubInterval
     for k=3:-1:0 //Initialize the function 
@@ -63,13 +61,13 @@ for i=4:numSubInterval
     yABM(i+1)=Ypre;
     xABM(i+1)=iniInterval+i*h;
     
-    //disp(yABM(i+1),xABM(i+1));
-    
     //Correction   
     x=xABM(i+1);
     y=yABM(i+1);
     f(5)=F_xy(x,y);
     Ycor=yABM(i)+((1/24)*h*(9*f(5)+19*f(4)-5*f(3)+f(2)));
-    
-    disp(Ycor,xABM(i+1));    
+    yABM(i+1)=Ycor;
+        
+    disp("x= "+string(xABM(i+1))+" y= "+string(yABM(i+1)));  
+  
 end

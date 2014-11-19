@@ -71,7 +71,7 @@ for i=1:N
     end
 
     for j =1:M
-        w(j+1)=w(j)+(k(1,j)+2*k(2,j)+2*k(3,j)+k(4,j))/6
+        w(j)=w(j)+(k(1,j)+2*k(2,j)+2*k(3,j)+k(4,j))/6
     end
 
     disp(w)
