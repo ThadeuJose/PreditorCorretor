@@ -6,7 +6,7 @@ funcprot(0)//Alter the protection level of the function to unprotected
 
 deff('fun1 = f1(u1,u2,u3,u4)', 'fun1=u2')
 
-deff('fun2 = f2(u1,u2,u3,u4)', 'fun2=(((-g)*(2*m1+m2)*sin(u1))-(m2*g*sin(u1-(2*u3)))-(2*sin(u1-u3)*m2*(((u4^2)*l2)+(((u2^2)*l1)*cos(u1-u3)))))/(l1*(2*m1+m2-(m2*cos((2*u1)-(2*u3)))))')
+deff('fun2 = f2(u1,u2,u3,u4)', 'fun2=(((-g)*((2*m1)+m2)*sin(u1))-(m2*g*sin(u1-(2*u3)))-(2*sin(u1-u3)*m2*(((u4^2)*l2)+(((u3^2)*l1)*cos(u1-u3)))))/(l1*((2*m1)+m2-(m2*cos((2*u1)-(2*u3)))))')
 
 deff('fun3 = f3(u1,u2,u3,u4)', 'fun3=u4')
 
@@ -14,22 +14,22 @@ deff('fun4 = f4(u1,u2,u3,u4)', 'fun4=(2*sin(u1-u3)*(((u2^2)*l1*(m1+m2))+(g*(m1+m
 
 //Initial Condition
 g=9.81
-l1=1
-l2=1
-m1=0.5
+l1=0.6
+l2=0.3
+m1=0.1
 m2=0.5
 //Radians
 teta1=%pi/2
 teta2=0
 dteta1=0
-dteta2=0
+dteta2=1
 
 M=4 //Number of Equations
 
 a=0
-b=100
-N=10000
-h=(b-a)/N
+b=0.1
+N=10
+h=0.01
 
 u1=teta1
 u2=dteta1
@@ -71,12 +71,13 @@ for i=1:N
     end
 
     for j =1:M
-        w(j)=w(j)+(k(1,j)+2*k(2,j)+2*k(3,j)+k(4,j))/6
+        w(j)=w(j)+((k(1,j)+2*k(2,j)+2*k(3,j)+k(4,j))/6)
     end
+    //disp(w)
+if i<10 then
+    disp(i)
     disp(w)
-//if i<5 then
-//    disp(w)
-//end
+end
 //if i == N then
 //    disp(w)
 //end

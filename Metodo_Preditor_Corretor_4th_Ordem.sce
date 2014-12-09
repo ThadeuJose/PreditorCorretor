@@ -21,21 +21,21 @@ endfunction
 
 
 iniInterval=0;
-endInterval=1;
-numSubInterval=10                                       //Number of steps of ABM4
-h=((endInterval-iniInterval)/numSubInterval);    //Step size
+endInterval=0.1;
+h=0.01//((endInterval-iniInterval)/numSubInterval);    //Step size
+numSubInterval=(endInterval-iniInterval)/h                                       //Number of steps of ABM4
 
 
 //Method Runge Kutta 4th Order
 xRK = iniInterval:h:iniInterval+3*h;                  // Calculates x for Range Kutta
 yRK = zeros(1,length(xRK));                            // Make a array of zeros who size is lenght(x) 
 //yRK(1)=0.5
-yRK(1) = 1;                                          //Initial condition
+yRK(1) = 0.3;                                          //Initial condition
 
 //t=x  e r=y
 function result = F_xy(t,r)
-    //result = r-(t^2)+1;                    //Change the function as you desire
-    result=t-2*r+1;
+    result = r-(t^2)+1;                    //Change the function as you desire
+    //result=t-2*r+1;
 endfunction
 
 yRK=RK4(xRK,yRK,h,F_xy)                              //Range Kutta 4th order  
